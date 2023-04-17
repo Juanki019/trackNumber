@@ -1,0 +1,37 @@
+"""
+Librerias usadas:
+- phonenumbers
+- folium - crear mapas
+- opencage - permite obtener la direccion a partir de cordenadas geograficas
+"""
+import phonenumbers
+#from test import number
+from phonenumbers import geocoder
+import folium
+import opencage
+
+Key = "b02f30f7c3804088b13262d15bc8f716"
+number = input("Phone that you want to track: \n")
+
+check_number = phonenumbers.parse(number)
+number_location = geocoder.description_for_number(check_number, "en")
+print(number_location)
+
+
+from phonenumbers import carrier
+service_provider = phonenumbers.parse(number)
+print(carrier.name_for_number(service_provider, "en"))
+
+from opencage.geocoder import OpenCageGeocode
+geocoder = OpenCageGeocode(Key)
+
+query = str(number_location)
+results = geocoder.geocode(query)
+
+lat = results[0]['geometry']['lat']
+lng = results[0]['geometry']['lng']
+print(lat, lng)
+
+map_location = folium.Map(location= [lat, lng], zoom_start=9)
+folium.Marker([lat, lng], popup=number_location).add_to(map_location)
+map_location.save("casa.html")
