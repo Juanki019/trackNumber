@@ -10,7 +10,7 @@ from phonenumbers import geocoder
 import folium
 import opencage
 
-Key = "b02f30f7c3804088b13262d15bc8f716"
+Key = "---put your key from opencage---"
 number = input("Phone that you want to track: \n")
 
 check_number = phonenumbers.parse(number)
